@@ -2,13 +2,15 @@ package com.orderManagementSystem.webservices.models;
 
 import com.orderManagementSystem.dao.models.Order;
 
+import java.util.List;
+
 public class OrderResponse extends Order {
     private String status;
     private Long orderId;
     private Double totalAmount;
     private String errorDetails;
-    private String drink;
-    private String size;
+    private List<String> drink;
+    private List<String> size;
     private String name;
     private String paymenttype;
     private String paymentstatus;
@@ -39,21 +41,21 @@ public class OrderResponse extends Order {
         this.name = name;
     }
 
-    public String getSize() {
+    public List<String> getSize() {
         return size;
     }
 
-    public void setSize(String size) {
+    public void setSize(List<String> size) {
         this.size = size;
     }
 
 
 
-    public String getDrink() {
+    public List<String> getDrink() {
         return drink;
     }
 
-    public void setDrink(String drink) {
+    public void setDrink(List<String> drink) {
         this.drink = drink;
     }
 

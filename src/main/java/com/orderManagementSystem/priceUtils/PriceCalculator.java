@@ -3,8 +3,10 @@ package com.orderManagementSystem.priceUtils;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import java.util.Map;
 
+import com.orderManagementSystem.webservices.models.List;
+
+import java.util.Map;
 @Component
 public class PriceCalculator {
 
@@ -17,19 +19,34 @@ public class PriceCalculator {
     @Value("#{${drink.lemonade.prices}}")
     private Map<String, Double> lemonadePrices;
 
-    public double calculatePrice(String drink, String size) {
-        Map<String, Double> prices;
-        if ("tea".equalsIgnoreCase(drink)) {
-            prices = teaPrices;
-        } else if ("coffee".equalsIgnoreCase(drink)) {
-            prices = coffeePrices;
-        } else if ("lemonade".equalsIgnoreCase(drink)) {
-            prices = lemonadePrices;
-        } else {
-            throw new IllegalArgumentException("Unknown drink type: " + drink);
-        }
+    public double calculateTotalPrice(java.util.List<String> list, java.util.List<String> list2) {
+        double totalPrice = 0.0;
+        
+        for (int i = 0; i < list.size(); i++) {
+            String drink = list.get(i).toLowerCase().trim();
+            String size = list2.get(i).toLowerCase().trim();
+            
+            Map<String, Double> prices;
+            if ("tea".equals(drink)) {
+                prices = teaPrices;
+            } else if ("coffee".equals(drink)) {
+                prices = coffeePrices;
+            } else if ("lemonade".equals(drink)) {
+                prices = lemonadePrices;
+            } else {
+                throw new IllegalArgumentException("Unknown drink type: " + drink);
+            }
 
-        Double price = prices.get(size.toLowerCase());
-        return price;
+            Double price = prices.get(size);
+            if (price != null) {
+                totalPrice += price;
+            } else {
+                throw new IllegalArgumentException("Unknown size for " + drink + ": " + size);
+            }
+        }
+        
+        return totalPrice;
     }
+
+
 }

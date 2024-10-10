@@ -27,24 +27,37 @@ public class Validator {
                 return false;
             }
 
-            String drink = orderRequest.getDrink();
-            String size = orderRequest.getSize();
+            List<String> drink = orderRequest.getDrink();
+            List<String> size = orderRequest.getSize();
             String name = orderRequest.getName();
 
-            if (drink == null || size == null || name == null) {
+            if (drink == null || size == null || name == null || drinks.size() != sizes.size() || drinks.isEmpty() || sizes.isEmpty()) {
                 return false;
             }
 
-            drink = drink.toLowerCase().trim();
-            size = size.toLowerCase().trim();
-            name = name.trim();
+            for (int i = 0; i < drinks.size(); i++) {
+                String d = drinks.get(i).toLowerCase().trim();
+                String s = sizes.get(i).toLowerCase().trim();
+
+                if (!drinks.contains(d)) {
+                    return false;
+                }
+
+                if (!sizes.contains(s)) {
+                    return false;
+                }
+            }
+
+            if (!name.trim().matches("[a-zA-Z]+")) {
+                return false;
+            }
 
             System.out.println("Available drinks: " + drinks);
             System.out.println("Available sizes: " + sizes);
             System.out.println("Received drink: " + drink);
             System.out.println("Received size: " + size);
 
-            return drinks.contains(drink) && sizes.contains(size) && name.matches("[a-zA-Z]+");
+            return true;
 
         } catch (Exception e) {
             System.err.println("Validation error: " + e.getMessage());

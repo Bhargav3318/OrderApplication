@@ -131,7 +131,7 @@ public class OrderService {
         orderResponse.setDrink(order.getDrink());
         orderResponse.setSize(order.getSize());
         orderResponse.setName(order.getName());
-        orderResponse.setTotalAmount(priceCalculator.calculatePrice(order.getDrink(), order.getSize()));
+        orderResponse.setTotalAmount(priceCalculator.calculateTotalPrice(order.getDrink(), order.getSize()));
         orderResponse.setPaymenttype(order.getPaymenttype());
         orderResponse.setPaymentstatus(order.getPaymentstatus());
         return orderResponse;
